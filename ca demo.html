@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CA.ai — Indian Tax & Compliance Advisor</title>
+  <meta name="theme-color" content="#FF9933">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CA.ai">
+  <link rel="manifest" id="pwa-manifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --saffron: #FF9933;
+      --saffron-dark: #e07b20;
+      --saffron-light: #fff3e0;
+      --saffron-100: #fff8ed;
+      --navy: #0f172a;
+      --navy-800: #1e293b;
+      --navy-700: #334155;
+      --blue-50: #f0f9ff;
+      --green-500: #22c55e;
+      --bg: #f5f7fa;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --radius: 18px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.10);
+      --glow-saffron: 0 0 20px rgba(255,153,51,.35);
+    }
+  <style>
+    /* ═══════ RESET & BASE ═══════ */
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--gray-800);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════ ANIMATED BACKGROUND MESH ═══════ */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0;
+      overflow: hidden; pointer-events: none;
+    }
+    .bg-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(72px); opacity: .13;
+    }
+    .bg-orb-1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #FF9933 0%, #ff6b00 60%, transparent 100%);
+      top: -160px; left: -120px;
+      animation: orbDrift1 16s ease-in-out infinite;
+    }
+    .bg-orb-2 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, #7c3aed 0%, #4f46e5 60%, transparent 100%);
+      bottom: -80px; right: -100px;
+      animation: orbDrift2 20s ease-in-out infinite;
+    }
+    .bg-orb-3 {
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, #06b6d4 0%, #0891b2 60%, transparent 100%);
+      top: 50%; left: 40%; opacity: .07;
+      animation: orbDrift3 24s ease-in-out infinite;
+    }
+    @keyframes orbDrift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(40px,-30px) scale(1.06); }
+      66%      { transform: translate(-20px,20px) scale(.94); }
+    }
+    @keyframes orbDrift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(-35px,25px) scale(1.08); }
+      75%      { transform: translate(20px,-15px) scale(.96); }
+    }
+    @keyframes orbDrift3 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(-40px,30px); }
+    }
+
+    /* ═══════ HEADER ═══════ */
+    header {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255,153,51,.10);
+      box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.05);
+      padding: 0 16px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 20;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon {
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--saffron) 0%, #ff6b00 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 19px; font-weight: 900;
+      box-shadow: 0 3px 12px rgba(255,153,51,.4);
+      animation: logoPulse 3s ease-in-out infinite;
+      position: relative; overflow: hidden;
+    }
+    .logo-icon::after {
+      content: '';
+      position: absolute; top: 0; left: -60%;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+      animation: logoShimmer 3.5s ease-in-out infinite;
+    }
+    @keyframes logoPulse {
+      0%,100% { box-shadow: 0 3px 12px rgba(255,153,51,.4); }
+      50%      { box-shadow: 0 4px 20px rgba(255,153,51,.65); }
+    }
+    @keyframes logoShimmer { to { left: 150%; } }
+    .logo-text { line-height: 1; }
+    .logo-name {
+      font-size: 16px; font-weight: 800; letter-spacing: -.4px;
+      background: linear-gradient(135deg, var(--gray-900) 30%, #b45309 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-sub { font-size: 10.5px; color: var(--gray-400); font-weight: 500; margin-top: 2px; }
+
+    /* status pill — animated gradient border */
+    .status-pill {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 10.5px; font-weight: 600; color: #15803d;
+      background: linear-gradient(white, white) padding-box,
+                  linear-gradient(135deg, #22c55e, #86efac, #16a34a, #22c55e) border-box;
+      border: 1.5px solid transparent;
+      padding: 4px 10px; border-radius: 100px;
+      animation: pillBorder 4s linear infinite;
+    }
+    @keyframes pillBorder {
+      0%   { background: linear-gradient(white,white) padding-box, linear-gradient(0deg,   #22c55e,#86efac,#16a34a,#22c55e) border-box; }
+      25%  { background: linear-gradient(white,white) padding-box, linear-gradient(90deg,  #22c55e,#86efac,#16a34a,#22c55e) border-box; }
+      50%  { background: linear-gradient(white,white) padding-box, linear-gradient(180deg, #22c55e,#86efac,#16a34a,#22c55e) border-box; }
+      75%  { background: linear-gradient(white,white) padding-box, linear-gradient(270deg, #22c55e,#86efac,#16a34a,#22c55e) border-box; }
+      100% { background: linear-gradient(white,white) padding-box, linear-gradient(360deg, #22c55e,#86efac,#16a34a,#22c55e) border-box; }
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
+      animation: dotPulse 2s ease-in-out infinite;
+      box-shadow: 0 0 0 0 rgba(34,197,94,.4);
+    }
+    @keyframes dotPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.4); }
+      70%  { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
+
+    .header-actions { display: flex; gap: 6px; align-items: center; }
+    .btn-icon {
+      width: 36px; height: 36px; border-radius: 11px;
+      border: 1.5px solid var(--gray-200); background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--gray-500);
+      transition: all .2s cubic-bezier(.34,1.56,.64,1);
+    }
+    .btn-icon:hover {
+      border-color: var(--saffron); color: var(--saffron);
+      background: var(--saffron-100);
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(255,153,51,.2);
+    }
+    .btn-icon:active { transform: scale(.95); }
+    .btn-icon.active {
+      border-color: var(--saffron); color: var(--saffron);
+      background: var(--saffron-100);
+      box-shadow: 0 2px 8px rgba(255,153,51,.25);
+    }
+
+    /* ═══════ LAYOUT ═══════ */
+    .app-body {
+      flex: 1; overflow: hidden; display: flex; flex-direction: column;
+      max-width: 680px; width: 100%; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    #chat-scroll {
+      flex: 1; overflow-y: auto;
+      padding: 16px 14px 8px;
+      scroll-behavior: smooth;
+    }
+    #chat-scroll::-webkit-scrollbar { width: 0; }
+
+    /* ═══════ WELCOME SCREEN ═══════ */
+    #welcome-screen { padding: 4px 0 16px; }
+
+    .welcome-hero {
+      text-align: center;
+      padding: 22px 16px 18px;
+    }
+    .hero-icon {
+      width: 72px; height: 72px; border-radius: 22px;
+      background: linear-gradient(135deg, var(--saffron) 0%, #ff6b00 100%);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 34px; color: white; margin-bottom: 16px;
+      box-shadow: 0 8px 28px rgba(255,153,51,.35), 0 0 0 0 rgba(255,153,51,.3);
+      animation: heroFloat 4.5s ease-in-out infinite, heroIn .7s cubic-bezier(.34,1.56,.64,1) both;
+      position: relative; overflow: hidden;
+    }
+    .hero-icon::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.25) 0%, transparent 60%);
+      border-radius: inherit;
+    }
+    @keyframes heroFloat {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      25%      { transform: translateY(-5px) rotate(.5deg); }
+      75%      { transform: translateY(-3px) rotate(-.5deg); }
+    }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(24px) scale(.85); }
+      to   { opacity: 1; transform: translateY(0)  scale(1); }
+    }
+    .hero-title {
+      font-size: 23px; font-weight: 900; letter-spacing: -.6px; margin-bottom: 7px;
+      background: linear-gradient(135deg, var(--gray-900) 20%, #b45309 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: heroIn .7s cubic-bezier(.34,1.56,.64,1) .08s both;
+    }
+    .hero-subtitle {
+      font-size: 13.5px; color: var(--gray-500); line-height: 1.55;
+      max-width: 300px; margin: 0 auto;
+      animation: heroIn .7s cubic-bezier(.34,1.56,.64,1) .16s both;
+    }
+    .coverage-bar {
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 14px;
+      animation: heroIn .7s cubic-bezier(.34,1.56,.64,1) .24s both;
+    }
+    .coverage-chip {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10.5px; font-weight: 600;
+      padding: 4px 10px; border-radius: 100px; border: 1.5px solid;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+    }
+    .coverage-chip:hover { transform: scale(1.06) translateY(-1px); }
+    .chip-it  { color: #7c3aed; background: #f5f3ff; border-color: #ddd6fe; }
+    .chip-gst { color: #0369a1; background: #f0f9ff; border-color: #bae6fd; }
+    .chip-tds { color: #b45309; background: #fffbeb; border-color: #fde68a; }
+    .chip-ca  { color: #047857; background: #ecfdf5; border-color: #a7f3d0; }
+
+    /* category cards */
+    .category-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px;
+    }
+    .cat-card {
+      background: var(--white);
+      border: 1.5px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      padding: 15px 13px; cursor: pointer;
+      transition: box-shadow .25s ease, border-color .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05), 0 0 0 0 rgba(255,153,51,0);
+      position: relative; overflow: hidden;
+      will-change: transform;
+    }
+    .cat-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,153,51,.06) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .cat-card:hover {
+      border-color: rgba(255,153,51,.4);
+      box-shadow: 0 8px 28px rgba(255,153,51,.15), 0 2px 8px rgba(0,0,0,.06);
+    }
+    .cat-card:hover::before { opacity: 1; }
+    .cat-card:active { transform: scale(.97) !important; }
+    .cat-icon {
+      width: 36px; height: 36px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; margin-bottom: 9px;
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .cat-card:hover .cat-icon { transform: scale(1.12) rotate(-3deg); }
+    .cat-title { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 3px; }
+    .cat-desc  { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
+
+    /* quick questions */
+    .quick-section { margin-top: 15px; }
+    .section-label {
+      font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--gray-400); margin-bottom: 9px; padding-left: 2px;
+    }
+    #quick-btns { display: flex; flex-wrap: wrap; gap: 7px; }
+    .quick-btn {
+      font-size: 12px; font-weight: 500;
+      padding: 7px 13px; border-radius: 100px;
+      border: 1.5px solid var(--gray-200); background: var(--white);
+      color: var(--gray-600); cursor: pointer;
+      transition: all .2s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .quick-btn:hover {
+      border-color: var(--saffron); color: var(--saffron);
+      background: var(--saffron-100);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 12px rgba(255,153,51,.18);
+    }
+    .quick-btn:active { transform: scale(.97); }
+
+    /* ═══════ MESSAGES ═══════ */
+    .msg-row {
+      display: flex; gap: 9px; margin-bottom: 16px;
+      animation: msgIn .35s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(14px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    .msg-row.user { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: white; margin-top: 2px;
+    }
+    .avatar-ai {
+      background: linear-gradient(135deg, var(--saffron), #ff6b00);
+      box-shadow: 0 3px 10px rgba(255,153,51,.35);
+      animation: avatarPop .4s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .avatar-user {
+      background: linear-gradient(135deg, #334155, #0f172a);
+      box-shadow: 0 3px 10px rgba(15,23,42,.25);
+    }
+    @keyframes avatarPop { from{transform:scale(0)} to{transform:scale(1)} }
+
+    .msg-bubble {
+      max-width: calc(100% - 52px);
+      border-radius: var(--radius);
+      padding: 12px 15px;
+      font-size: 13.5px; line-height: 1.65;
+      position: relative;
+    }
+    .bubble-ai {
+      background: rgba(255,255,255,.97);
+      border: 1.5px solid rgba(0,0,0,.06);
+      color: var(--gray-800);
+      border-top-left-radius: 5px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .bubble-ai::before {
+      content: '';
+      position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px;
+      background: linear-gradient(180deg, var(--saffron), #ff6b00);
+      border-radius: 0 3px 3px 0;
+    }
+    .bubble-user {
+      background: linear-gradient(145deg, #334155 0%, #1e293b 50%, #0f172a 100%);
+      color: white;
+      border-top-right-radius: 5px;
+      box-shadow: 0 4px 20px rgba(15,23,42,.28);
+    }
+
+    /* typing indicator */
+    .typing-dots {
+      display: flex; gap: 5px; align-items: center; padding: 5px 2px;
+    }
+    .typing-dots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      animation: typeBounce 1.3s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(1) {
+      background: var(--saffron);
+      box-shadow: 0 0 6px rgba(255,153,51,.5);
+    }
+    .typing-dots span:nth-child(2) {
+      background: #ff7a20; animation-delay: .18s;
+    }
+    .typing-dots span:nth-child(3) {
+      background: #e07b20; animation-delay: .36s;
+    }
+    @keyframes typeBounce {
+      0%,60%,100% { transform: translateY(0) scale(1);   opacity: .45; }
+      30%          { transform: translateY(-7px) scale(1.1); opacity: 1; }
+    }
+
+    /* prose */
+    .prose { color: var(--gray-800); }
+    .prose strong { font-weight: 700; color: var(--gray-900); }
+    .prose em { font-style: italic; }
+    .prose code {
+      background: #fef3c7; padding: 1px 6px; border-radius: 5px;
+      font-family: 'SF Mono','Fira Code',monospace; font-size: .8em; color: #92400e;
+    }
+    .prose h4 { font-weight: 700; font-size: 14px; margin: 11px 0 4px; color: var(--gray-900); }
+    .prose ul { list-style: none; padding: 0; margin: 5px 0; }
+    .prose li { padding-left: 15px; margin-bottom: 4px; position: relative; }
+    .prose li::before {
+      content: '▸'; position: absolute; left: 0;
+      color: var(--saffron); font-size: .85em; top: .1em;
+    }
+    .prose blockquote {
+      border-left: 3px solid var(--saffron);
+      padding: 9px 13px; margin: 9px 0;
+      background: linear-gradient(135deg, var(--saffron-100), #fff8f0);
+      border-radius: 0 11px 11px 0;
+      font-size: 13px; color: var(--gray-700);
+      box-shadow: 0 2px 8px rgba(255,153,51,.08);
+    }
+    .prose hr { border: none; border-top: 1.5px solid var(--gray-100); margin: 11px 0; }
+
+    /* sources */
+    .sources-wrap {
+      margin-top: 11px; padding-top: 11px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .sources-toggle {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600; color: var(--gray-400);
+      cursor: pointer; user-select: none;
+      transition: color .15s;
+    }
+    .sources-toggle:hover { color: var(--saffron); }
+    .sources-chevron { transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+    .sources-chips { display: none; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+    .sources-chips.open { display: flex; animation: fadeUp .25s ease both; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+    .source-chip {
+      font-size: 10.5px; font-weight: 500;
+      padding: 3px 10px; border-radius: 100px;
+      background: linear-gradient(135deg, var(--saffron-100), #fff3e0);
+      color: #92400e; border: 1px solid #fed7aa;
+      transition: transform .15s;
+    }
+    .source-chip:hover { transform: scale(1.04); }
+
+    /* msg actions */
+    .msg-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+      opacity: 0; transition: opacity .2s;
+    }
+    .msg-row:hover .msg-actions { opacity: 1; }
+    .action-btn {
+      font-size: 10.5px; font-weight: 600;
+      color: var(--gray-400); display: flex; align-items: center; gap: 3px;
+      cursor: pointer; padding: 2px 0; background: none; border: none;
+      transition: color .15s;
+    }
+    .action-btn:hover { color: var(--saffron); }
+
+    /* ═══════ INPUT AREA ═══════ */
+    .input-area {
+      flex-shrink: 0; padding: 10px 14px 16px;
+      background: linear-gradient(to top, rgba(245,247,250,.98) 70%, transparent);
+      position: relative; z-index: 5;
+    }
+    .input-wrap {
+      border-radius: var(--radius);
+      padding: 2px;
+      background: var(--gray-200);
+      transition: background .25s;
+    }
+    .input-wrap:focus-within {
+      background: linear-gradient(135deg, var(--saffron), #ff6b00, var(--saffron));
+      background-size: 200% 200%;
+      animation: gradientShift 2s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .input-card {
+      background: var(--white);
+      border-radius: calc(var(--radius) - 2px);
+      padding: 10px 10px 10px 14px;
+      display: flex; gap: 8px; align-items: flex-end;
+    }
+    #input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-family: inherit; font-size: 14px; color: var(--gray-800);
+      resize: none; line-height: 1.5; max-height: 120px; min-height: 24px;
+    }
+    #input::placeholder { color: var(--gray-400); }
+
+    .send-btn {
+      width: 38px; height: 38px; border-radius: 12px; border: none;
+      background: linear-gradient(135deg, var(--saffron), #ff6b00);
+      color: white; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+      box-shadow: 0 3px 12px rgba(255,153,51,.35);
+      animation: sendIdle 3s ease-in-out infinite;
+    }
+    @keyframes sendIdle {
+      0%,100% { box-shadow: 0 3px 12px rgba(255,153,51,.35); }
+      50%      { box-shadow: 0 4px 18px rgba(255,153,51,.55); }
+    }
+    .send-btn:hover {
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 6px 22px rgba(255,153,51,.5);
+      animation: none;
+    }
+    .send-btn:active { transform: scale(.94); }
+    .send-btn:disabled { opacity: .4; transform: none; cursor: not-allowed; animation: none; }
+
+    .stop-btn {
+      width: 38px; height: 38px; border-radius: 12px; border: none;
+      background: #fee2e2; color: #ef4444;
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: all .2s; box-shadow: 0 2px 8px rgba(239,68,68,.2);
+    }
+    .stop-btn:hover { background: #fecaca; transform: scale(1.05); }
+
+    .input-hint {
+      text-align: center; font-size: 10.5px; color: var(--gray-400);
+      margin-top: 7px; font-weight: 500;
+    }
+
+    /* ═══════ PROFILE MODAL ═══════ */
+    #profile-modal {
+      display: none; position: fixed; inset: 0; z-index: 50;
+      flex-direction: column; justify-content: flex-end; align-items: center;
+    }
+    #profile-modal.open { display: flex; }
+    .modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(6px);
+      animation: fadeIn .22s ease;
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal-sheet {
+      position: relative; background: var(--white);
+      width: 100%; max-width: 520px;
+      border-radius: 26px 26px 0 0;
+      padding: 0 0 32px;
+      max-height: 90vh; overflow-y: auto;
+      animation: sheetUp .32s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 -8px 40px rgba(0,0,0,.15);
+    }
+    @keyframes sheetUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+
+    .sheet-header {
+      background: linear-gradient(135deg, #fff8ed 0%, #fff3e0 100%);
+      border-bottom: 1px solid rgba(255,153,51,.12);
+      padding: 16px 20px 18px; border-radius: 26px 26px 0 0;
+      margin-bottom: 20px;
+    }
+    .sheet-handle {
+      width: 38px; height: 4px; border-radius: 2px;
+      background: rgba(255,153,51,.3); margin: 0 auto 16px;
+    }
+    .sheet-title { font-size: 18px; font-weight: 800; color: var(--gray-900); margin-bottom: 3px; }
+    .sheet-sub   { font-size: 12.5px; color: var(--gray-500); }
+
+    .sheet-body { padding: 0 20px; }
+    .field-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--gray-500); margin-bottom: 7px;
+    }
+    .field-select {
+      width: 100%; border: 1.5px solid var(--gray-200); border-radius: 13px;
+      padding: 12px 14px; font-family: inherit; font-size: 14px;
+      color: var(--gray-800); background: var(--white); outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
+      margin-bottom: 17px; transition: border-color .2s, box-shadow .2s;
+    }
+    .field-select:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(255,153,51,.12);
+    }
+    .regime-group { display: flex; gap: 9px; margin-bottom: 20px; }
+    .regime-card {
+      flex: 1; padding: 12px 8px; border-radius: 14px;
+      border: 1.5px solid var(--gray-200); text-align: center;
+      cursor: pointer; background: var(--white);
+      transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .regime-card:hover { border-color: rgba(255,153,51,.4); transform: translateY(-2px); }
+    .regime-card .regime-icon { font-size: 20px; margin-bottom: 5px; }
+    .regime-card .regime-name { font-size: 12px; font-weight: 700; color: var(--gray-700); }
+    .regime-card .regime-desc { font-size: 10px; color: var(--gray-400); margin-top: 2px; line-height: 1.3; }
+    .regime-card.selected {
+      border-color: var(--saffron);
+      background: linear-gradient(135deg, #fff8ed, #fff3e0);
+      box-shadow: 0 6px 18px rgba(255,153,51,.22);
+      transform: translateY(-3px);
+    }
+    .regime-card.selected .regime-name { color: var(--saffron-dark); }
+
+    .save-btn {
+      width: 100%; padding: 15px; border-radius: 15px; border: none;
+      background: linear-gradient(135deg, var(--saffron), #ff6b00);
+      color: white; font-family: inherit; font-size: 15px; font-weight: 800;
+      cursor: pointer; box-shadow: 0 5px 20px rgba(255,153,51,.4);
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+      position: relative; overflow: hidden; margin-top: 4px;
+    }
+    .save-btn::before {
+      content: ''; position: absolute; top: 0; left: -80%;
+      width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+      animation: btnShimmer 2.8s ease-in-out infinite;
+    }
+    @keyframes btnShimmer { to { left: 160%; } }
+    .save-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,153,51,.5); }
+    .save-btn:active { transform: scale(.97); }
+
+    /* ═══════ SCROLLBAR ═══════ */
+    .modal-sheet::-webkit-scrollbar { width: 4px; }
+    .modal-sheet::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
+
+    /* ═══════ RIPPLE ═══════ */
+    .ripple-wrap { position: relative; overflow: hidden; }
+    .ripple {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      background: rgba(255,153,51,.25);
+      transform: scale(0); animation: rippleOut .5s ease-out forwards;
+    }
+    @keyframes rippleOut { to { transform: scale(4); opacity: 0; } }
+  </style>
+</head>
+<body>
+
+<div class="bg-mesh">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">₹</div>
+    <div class="logo-text">
+      <div class="logo-name">CA.ai</div>
+      <div class="logo-sub">Indian Tax Advisor</div>
+    </div>
+  </div>
+  <div class="status-pill">
+    <div class="status-dot"></div>
+    On-device · 91 topics
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" id="profile-btn" onclick="openProfile()" title="Financial Profile">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+    </button>
+    <button class="btn-icon" onclick="clearChat()" title="New chat">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- APP BODY -->
+<div class="app-body">
+  <div id="chat-scroll">
+
+    <!-- WELCOME SCREEN -->
+    <div id="welcome-screen">
+      <div class="welcome-hero">
+        <div class="hero-icon">⚖️</div>
+        <div class="hero-title">Your AI Chartered Accountant</div>
+        <div class="hero-subtitle">Expert guidance on Indian Income Tax, GST, TDS &amp; Company Law — entirely on your device, no internet needed.</div>
+        <div class="coverage-bar">
+          <span class="coverage-chip chip-it">📊 Income Tax</span>
+          <span class="coverage-chip chip-gst">🧾 GST</span>
+          <span class="coverage-chip chip-tds">💸 TDS/TCS</span>
+          <span class="coverage-chip chip-ca">🏢 Companies Act</span>
+        </div>
+      </div>
+
+      <div class="category-cards">
+        <div class="cat-card ripple-wrap" onclick="askCategory('income tax saving tips FY 2024-25 new regime vs old')">
+          <div class="cat-icon" style="background:#f5f3ff">📊</div>
+          <div class="cat-title">Income Tax</div>
+          <div class="cat-desc">Slabs, 80C/80D, HRA, capital gains, ITR filing</div>
+        </div>
+        <div class="cat-card ripple-wrap" onclick="askCategory('GST registration compliance GSTR-1 GSTR-3B')">
+          <div class="cat-icon" style="background:#f0f9ff">🧾</div>
+          <div class="cat-title">GST</div>
+          <div class="cat-desc">Returns, ITC, e-invoicing, rates, exports</div>
+        </div>
+        <div class="cat-card ripple-wrap" onclick="askCategory('TDS rates sections 192 194J deadlines')">
+          <div class="cat-icon" style="background:#fffbeb">💸</div>
+          <div class="cat-title">TDS / TCS</div>
+          <div class="cat-desc">Sections 192–194Q, certificates, deadlines</div>
+        </div>
+        <div class="cat-card ripple-wrap" onclick="askCategory('company annual compliance AGM ROC filings checklist')">
+          <div class="cat-icon" style="background:#ecfdf5">🏢</div>
+          <div class="cat-title">Companies Act</div>
+          <div class="cat-desc">ROC filings, AGM, KYC, LLP compliance</div>
+        </div>
+      </div>
+
+      <div class="quick-section">
+        <div class="section-label">Popular questions</div>
+        <div id="quick-btns"></div>
+      </div>
+    </div>
+
+    <!-- CHAT MESSAGES injected here -->
+    <div id="messages"></div>
+
+  </div>
+
+  <!-- INPUT AREA -->
+  <div class="input-area">
+    <div class="input-wrap">
+      <div class="input-card">
+        <textarea id="input" rows="1"
+          placeholder="Ask about tax, GST, TDS, compliance…"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"></textarea>
+        <button class="send-btn" id="send-btn" onclick="handleSend()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        </button>
+        <button class="stop-btn" id="stop-btn" onclick="stopStream()">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="input-hint">⚡ Answers generated on-device · Always verify with a qualified CA</div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div id="profile-modal" onclick="handleModalClick(event)">
+  <div class="modal-backdrop"></div>
+  <div class="modal-sheet">
+    <div class="sheet-header">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">Your Financial Profile</div>
+      <div class="sheet-sub">Stored only on this device. Personalises every answer.</div>
+    </div>
+    <div class="sheet-body">
+      <div class="field-label">Annual Income</div>
+      <select id="p-income" class="field-select">
+        <option value="">Select your income range…</option>
+        <option>Below ₹2.5L</option>
+        <option>₹2.5L – ₹5L</option>
+        <option>₹5L – ₹10L</option>
+        <option>₹10L – ₹20L</option>
+        <option>₹20L – ₹50L</option>
+        <option>Above ₹50L</option>
+      </select>
+
+      <div class="field-label">I am a…</div>
+      <select id="p-type" class="field-select">
+        <option value="">Select profession…</option>
+        <option>Salaried Employee</option>
+        <option>Business Owner</option>
+        <option>Professional (CA / Doctor / Lawyer)</option>
+        <option>Freelancer / Consultant</option>
+        <option>Investor</option>
+        <option>Company Director</option>
+        <option>Student</option>
+      </select>
+
+      <div class="field-label">Tax Regime</div>
+      <div class="regime-group">
+        <div class="regime-card ripple-wrap" id="rc-new" onclick="setRegime('new')">
+          <div class="regime-icon">🆕</div>
+          <div class="regime-name">New</div>
+          <div class="regime-desc">Lower slabs, few deductions</div>
+        </div>
+        <div class="regime-card ripple-wrap" id="rc-old" onclick="setRegime('old')">
+          <div class="regime-icon">📋</div>
+          <div class="regime-name">Old</div>
+          <div class="regime-desc">Higher slabs, 80C/D/HRA</div>
+        </div>
+        <div class="regime-card ripple-wrap selected" id="rc-unsure" onclick="setRegime('unsure')">
+          <div class="regime-icon">🤔</div>
+          <div class="regime-name">Unsure</div>
+          <div class="regime-desc">Help me decide</div>
+        </div>
+      </div>
+
+      <button class="save-btn ripple-wrap" onclick="saveProfileAndClose()">Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// KNOWLEDGE BASE — 91 chunks (Indian Income Tax, GST, TDS, Companies Act)
+// ═══════════════════════════════════════════════════════════════════════════
+const KB = [
+  {id:'it-80c',cat:'income_tax',title:'Section 80C — Tax Saving Deductions (₹1.5 Lakh Limit)',
+   content:'Max deduction: ₹1,50,000/year under old regime only.\nEligible investments: PPF (15-yr lock-in, EEE status), ELSS mutual funds (3-yr lock-in), NSC (5-yr), LIC/term insurance premiums, ULIP, 5-year tax-saving FD, EPF employee contribution, tuition fees for 2 children, home loan principal repayment, SSY (Sukanya Samriddhi Yojana), SCSS (Senior Citizen Savings Scheme).\nNot available under new tax regime (115BAC).',
+   kw:['ppf','elss','nsc','lic','epf','ssy','scss','ulip','tuition','fd','save tax','80c','deduction','investment']},
+
+  {id:'it-80d',cat:'income_tax',title:'Section 80D — Health Insurance Deduction',
+   content:'Deduction for health insurance premiums:\n• Self, spouse, children (non-senior): up to ₹25,000/year\n• Senior citizen parents (60+): up to ₹50,000/year\n• Preventive health check-up: ₹5,000 within above limits\nCash payments NOT eligible — must pay by cheque/online.\nMaximum combined: ₹1,00,000 (₹50,000 self-senior + ₹50,000 senior parents).\nNot available under new tax regime.',
+   kw:['health insurance','medical','premium','senior citizen','parents','80d','mediclaim','preventive']},
+
+  {id:'it-87a',cat:'income_tax',title:'Section 87A — Income Tax Rebate',
+   content:'Old Regime: Income ≤ ₹5,00,000 → rebate up to ₹12,500. Effective zero tax up to ₹5L.\nNew Regime: Income ≤ ₹7,00,000 → rebate up to ₹25,000. Effective zero tax up to ₹7L (₹7.75L with ₹75K standard deduction).',
+   kw:['rebate','zero tax','no tax','87a','5 lakh','7 lakh','nil tax']},
+
+  {id:'it-new-regime',cat:'income_tax',title:'New Tax Regime (115BAC) Slabs — FY 2024-25',
+   content:'Tax slabs (default from FY 2023-24):\n• ₹0 – ₹3,00,000: Nil\n• ₹3,00,001 – ₹7,00,000: 5%\n• ₹7,00,001 – ₹10,00,000: 10%\n• ₹10,00,001 – ₹12,00,000: 15%\n• ₹12,00,001 – ₹15,00,000: 20%\n• Above ₹15,00,000: 30%\nStandard deduction: ₹75,000 for salaried employees.\nNo Chapter VI-A deductions (80C, 80D, HRA etc.). Employer NPS 80CCD(2) still allowed.',
+   kw:['new regime','115bac','slab','tax rate','standard deduction','75000','default regime','fy 2024']},
+
+  {id:'it-old-regime',cat:'income_tax',title:'Old Tax Regime Slabs — FY 2024-25',
+   content:'Old regime (must opt-in explicitly):\n• ₹0 – ₹2,50,000: Nil\n• ₹2,50,001 – ₹5,00,000: 5%\n• ₹5,00,001 – ₹10,00,000: 20%\n• Above ₹10,00,000: 30%\nStandard deduction: ₹50,000 for salaried.\nAll Chapter VI-A deductions available (80C ₹1.5L, 80D, HRA, LTA, 24b, 80CCD etc.).\nBetter than new regime if total deductions > ~₹4.5 lakh.',
+   kw:['old regime','slab rate','deduction','surcharge','fy 2024','break-even']},
+
+  {id:'it-new-vs-old',cat:'income_tax',title:'New Regime vs Old Regime — Which Saves More?',
+   content:'Choose old regime if your total eligible deductions are large:\n• 80C (₹1.5L) + 80D (₹25K) + HRA + 24(b) (₹2L) + 80CCD(1B) (₹50K) can easily exceed ₹4.5L\nApproximate break-even: If deductions > ~₹4.5L, old regime saves more tax.\nNew regime wins for: simple salaried with few investments, income below ₹7L (zero tax via 87A rebate).\nFor income ₹15L+ with max deductions: old regime can save ₹40,000–₹80,000 more.',
+   kw:['new regime','old regime','compare','which better','save','break even','switch','choose']},
+
+  {id:'it-80ccd',cat:'income_tax',title:'Section 80CCD — NPS Deduction',
+   content:'80CCD(1): Employee NPS contribution — up to 10% of salary, within ₹1.5L overall 80C limit.\n80CCD(1B): Additional ₹50,000 deduction for NPS Tier-1 — OVER AND ABOVE the ₹1.5L 80C limit. Net extra saving at 30% slab: ~₹15,600.\n80CCD(2): Employer NPS contribution — up to 10% of salary (14% for central govt employees). No cap. AVAILABLE UNDER NEW REGIME TOO.',
+   kw:['nps','national pension','80ccd','pension','50000','employer contribution','tier 1']},
+
+  {id:'it-24b',cat:'income_tax',title:'Section 24(b) — Home Loan Interest Deduction',
+   content:'Self-occupied property: Deduct up to ₹2,00,000/year on home loan interest.\nLet-out/deemed let-out: No upper limit, but set-off against other income capped at ₹2L/year. Balance loss carried forward 8 years.\nUnder-construction: Interest accumulated, deductible in 5 equal installments post-possession.\nConditions: Loan for purchase/construction (not repair), after April 1 1999, possession within 5 years.\nOld regime only.',
+   kw:['home loan','interest','house property','24b','mortgage','emi interest','property loan']},
+
+  {id:'it-hra',cat:'income_tax',title:'HRA Exemption — Section 10(13A)',
+   content:'Exempt HRA = Minimum of:\n(a) Actual HRA received from employer\n(b) Rent paid − 10% of basic salary\n(c) 50% of basic (Delhi/Mumbai/Chennai/Kolkata) OR 40% (other cities)\nConditions: Must pay rent, not own house in same city. PAN of landlord if rent > ₹1L/year.\nNot available under new tax regime.',
+   kw:['hra','house rent allowance','rent','exemption','metro','landlord','tenant','rented']},
+
+  {id:'it-capital-gains',cat:'income_tax',title:'Capital Gains Tax Rates — FY 2024-25',
+   content:'Short-Term Capital Gains (STCG):\n• Listed equity/equity MF (held < 12 months): 20% u/s 111A\n• Other assets (property, debt MF): slab rate\nLong-Term Capital Gains (LTCG):\n• Listed equity/equity MF (held ≥ 12 months, gains > ₹1.25L): 12.5% u/s 112A (no indexation)\n• Property (held ≥ 24 months): 12.5% without indexation\n• Debt MF (post-April 2023): slab rate, no LTCG benefit',
+   kw:['capital gains','stcg','ltcg','shares','mutual fund','property sale','equity','indexation','111a','112a']},
+
+  {id:'it-advance-tax',cat:'income_tax',title:'Advance Tax — Due Dates',
+   content:'Advance tax payment schedule (FY 2024-25):\n• June 15: 15% of estimated annual tax\n• September 15: 45% (cumulative)\n• December 15: 75% (cumulative)\n• March 15: 100% (cumulative)\nWho must pay: Tax liability ≥ ₹10,000 after TDS.\nExempt: Senior citizens (60+) with no business income.\nInterest for default: 234B (1%/month shortfall), 234C (1%/month deferment).',
+   kw:['advance tax','installment','june','september','december','march 15','234b','234c','quarterly payment']},
+
+  {id:'it-itr-deadlines',cat:'income_tax',title:'ITR Filing Deadlines and Penalties',
+   content:'Due dates:\n• Individuals/HUF/non-audit: July 31\n• Tax audit cases (44AB): October 31\n• Transfer pricing: November 30\n• Belated/revised return: December 31\nLate filing penalty (234F): ₹5,000 (₹1,000 if income ≤ ₹5 lakh).',
+   kw:['itr','filing deadline','july 31','october 31','late fee','belated','revised','234f','return due date']},
+
+  {id:'it-itr-forms',cat:'income_tax',title:'ITR Form Selection Guide',
+   content:'• ITR-1 (Sahaj): Salaried + one house property + income < ₹50 lakh. No capital gains, no foreign assets.\n• ITR-2: Capital gains, multiple properties, foreign assets/income.\n• ITR-3: Business or professional income (non-presumptive).\n• ITR-4 (Sugam): Presumptive taxation u/s 44AD, 44ADA, 44AE.\n• ITR-5: Firms, LLPs.\n• ITR-6: Companies.',
+   kw:['itr form','itr-1','itr-2','itr-3','itr-4','sahaj','sugam','which form','return form']},
+
+  {id:'it-44ad-44ada',cat:'income_tax',title:'Presumptive Taxation — Section 44AD and 44ADA',
+   content:'Section 44AD (Eligible Business):\n• Turnover ≤ ₹3 crore (₹2 crore if >5% cash)\n• Presumed profit: 8% of turnover (6% for digital receipts)\n• No books of accounts required\nSection 44ADA (Professionals: CA, doctor, lawyer, architect, engineer):\n• Gross receipts ≤ ₹75 lakh\n• Presumed profit: 50%\nBoth: Advance tax due only on March 15.',
+   kw:['44ad','44ada','presumptive','small business','professional','no audit','8 percent','50 percent']},
+
+  {id:'it-44ab',cat:'income_tax',title:'Tax Audit — Section 44AB',
+   content:'Tax audit mandatory when:\n• Business turnover > ₹1 crore (₹10 crore if cash < 5%)\n• Professional receipts > ₹50 lakh\n• Opting out of 44AD/44ADA with lower profit declared\nAuditor: Chartered Accountant. Forms: 3CA/3CB + 3CD.\nDue date: September 30.\nPenalty: 0.5% of turnover or ₹1,50,000 (whichever lower).',
+   kw:['tax audit','44ab','3cd','turnover limit','ca audit','1 crore','50 lakh','september 30']},
+
+  {id:'it-80g',cat:'income_tax',title:'Section 80G — Donations Deduction',
+   content:'100% deduction, no qualifying limit: PM Relief Fund, CM Relief Fund, National Defence Fund, PM Care Fund.\n50% deduction, no qualifying limit: Jawaharlal Nehru Memorial Fund.\n100% with 10% AGI cap: Approved institutions with 80G(5) registration.\n50% with 10% AGI cap: Certain other approved institutions.\nCash donations > ₹2,000 NOT eligible. Must donate by cheque/NEFT/UPI.',
+   kw:['80g','donation','charitable','pm relief','ngo','trust','contribution','charity']},
+
+  {id:'gst-registration',cat:'gst',title:'GST Registration — Threshold and Process',
+   content:'Mandatory if aggregate turnover exceeds:\n• ₹40 lakh (goods) or ₹20 lakh (services) — regular states\n• ₹20 lakh (goods) or ₹10 lakh (services) — special category states\nMandatory regardless of turnover: inter-state supply, e-commerce, casual/non-resident taxable persons.\nGSTIN: 2-digit state code + 10-digit PAN + entity code + Z + check digit.',
+   kw:['gst registration','gstin','threshold','aggregate turnover','40 lakh','20 lakh','register','gst number']},
+
+  {id:'gst-rates',cat:'gst',title:'GST Rate Slabs — Key Categories',
+   content:'0%: Fresh vegetables, milk, eggs, salt, bread, books, health/education services.\n5%: Edible oil, sugar, tea, coal, life-saving drugs, economy air/rail, non-AC restaurants.\n12%: Processed food, mobile phones, LED lights, affordable housing.\n18%: Most services (IT, professional, telecom, banking), paint, cement, AC restaurants.\n28%: Luxury cars, cigarettes, aerated drinks, casinos.\nSpecial: Gold/silver 3%, diamonds 0.25%.',
+   kw:['gst rate','18 percent','12 percent','nil rate','exempt','tax rate','hsn','sac','goods rate','restaurant']},
+
+  {id:'gst-gstr1',cat:'gst',title:'GSTR-1 — Outward Supplies Return',
+   content:'GSTR-1 reports all sales/outward supplies:\n• Turnover > ₹5 crore: Monthly, by 11th\n• Turnover ≤ ₹5 crore (QRMP): Quarterly, by 13th of month after quarter end\nContents: B2B invoice-wise, B2C summary, exports, credit/debit notes.\nAuto-populates buyer\'s GSTR-2B for ITC.\nLate fee: ₹200/day max ₹5,000. Nil return: ₹50/day max ₹2,000.',
+   kw:['gstr-1','gstr1','outward supply','sales return','b2b','b2c','invoice filing','11th','quarterly']},
+
+  {id:'gst-gstr3b',cat:'gst',title:'GSTR-3B — Monthly Summary Return',
+   content:'Self-declared monthly summary:\n• Turnover > ₹5 crore: by 20th\n• ≤ ₹5 crore, Category 1 states: by 22nd\n• ≤ ₹5 crore, Category 2 states: by 24th\nContents: Outward summary, ITC claimed, GST paid (IGST/CGST/SGST split).\nCannot be revised. Late fee: ₹50/day max ₹5,000.\nInterest: 18% p.a. on late GST payment.',
+   kw:['gstr-3b','gstr3b','monthly return','summary','20th','itc claim','tax payment','interest 18%']},
+
+  {id:'gst-gstr9',cat:'gst',title:'GSTR-9 — Annual GST Return',
+   content:'Mandatory if annual turnover > ₹2 crore.\nDue: December 31 of the following FY.\nGSTR-9C (reconciliation certified by CA): mandatory if turnover > ₹5 crore.\nAllows corrections for transactions missed in monthly returns.\nLate fee: ₹200/day max 0.25% of turnover.',
+   kw:['gstr-9','annual return','gstr9c','reconciliation','december 31','annual gst','yearly filing']},
+
+  {id:'gst-einvoice',cat:'gst',title:'E-Invoicing — Rules and Process',
+   content:'Mandatory for turnover > ₹5 crore (since August 2023).\nProcess: Generate invoice → upload JSON to IRP → get IRN + QR code → share to buyer.\nNot applicable: Banks, NBFCs, SEZ units, GTA under RCM, government departments.\nE-invoice auto-populates GSTR-1.\nNon-compliance: Invoice invalid; buyer loses ITC.',
+   kw:['e-invoice','einvoice','irn','irp','qr code','invoice registration','5 crore','electronic invoice']},
+
+  {id:'gst-itc',cat:'gst',title:'Input Tax Credit (ITC) — Eligibility and Rules',
+   content:'ITC eligible when: goods/services for business use, GST paid, tax invoice held, supplier filed GSTR-1.\nBlocked credits (Section 17(5)):\n• Motor vehicles for personal use\n• Food, beauty treatment, health services, club membership\n• Construction of immovable property\nITC reversal: Pay supplier within 180 days else reverse ITC.\nTime limit: Claim by November 30 following FY end.',
+   kw:['itc','input tax credit','blocked credit','17(5)','gstr-2b','reversal','credit','set off']},
+
+  {id:'gst-rcm',cat:'gst',title:'Reverse Charge Mechanism (RCM)',
+   content:'Recipient pays GST instead of supplier.\nMandatory RCM services:\n• GTA (Goods Transport Agency) to registered persons: 5%\n• Legal services from advocate to business entity\n• Director services to company\n• Insurance agent services to insurance companies\n• Import of services\nRecipient must issue self-invoice, claim ITC only after GST payment.',
+   kw:['rcm','reverse charge','gta','transport','advocate','lawyer','import services','self invoice']},
+
+  {id:'gst-composition',cat:'gst',title:'GST Composition Scheme',
+   content:'Eligible: Turnover ≤ ₹1.5 crore.\nRates: Manufacturers 1%, traders 1%, restaurants 5%.\nRestrictions:\n• Cannot make inter-state supplies\n• Cannot collect GST from customers\n• Cannot issue tax invoice\n• Cannot claim ITC\nFiling: CMP-08 quarterly by 18th. GSTR-4 annual by April 30.',
+   kw:['composition','small business','1.5 crore','simplified gst','cmp-08','gstr-4','bill of supply']},
+
+  {id:'tds-192',cat:'tds',title:'Section 192 — TDS on Salary',
+   content:'TDS deducted by employer based on estimated annual income and applicable slab.\nEmployee submits Form 12BB: regime choice, deductions (80C, 80D, HRA), other income.\nTDS deposited by 7th of every month (April 30 for March).\nForm 16: Issued by June 15 of assessment year; Part A = TDS summary, Part B = salary computation.',
+   kw:['192','salary tds','employer','form 16','12bb','salaried','tds on salary','pay slip']},
+
+  {id:'tds-194a',cat:'tds',title:'Section 194A — TDS on Interest',
+   content:'TDS on interest from bank/co-operative/post office:\n• Threshold: > ₹40,000/year (₹50,000 for senior citizens)\n• Rate: 10% (20% if PAN not provided)\nSubmit Form 15G (non-senior) or Form 15H (senior) to avoid TDS if below taxable income.\nTDS deducted on accrual basis — quarterly.',
+   kw:['194a','fd interest','fixed deposit','bank interest','tds interest','15g','15h','form 15g','senior citizen fd']},
+
+  {id:'tds-194c',cat:'tds',title:'Section 194C — TDS on Contracts',
+   content:'TDS on payments to contractors:\n• Single payment > ₹30,000 OR aggregate > ₹1,00,000/FY → TDS mandatory\nRates: Individual/HUF 1%, Others (company/firm) 2%.\nCovers: Advertising, broadcasting, transport, catering, manufacturing, construction.\nSupply of material + labour = work contract → TDS on full amount.',
+   kw:['194c','contractor','sub-contractor','work contract','advertising','transport','catering','1 percent','2 percent']},
+
+  {id:'tds-194h',cat:'tds',title:'Section 194H — TDS on Commission/Brokerage',
+   content:'TDS on commission or brokerage:\n• Threshold: > ₹15,000/year\n• Rate: 5% (10% if PAN not provided)\nCovers: Referral fees, broker commissions, franchise fees.\nTDS payment due: 7th of next month.',
+   kw:['194h','commission','brokerage','referral','agency','franchise','broker','5 percent commission']},
+
+  {id:'tds-194i',cat:'tds',title:'Section 194I — TDS on Rent',
+   content:'Threshold: > ₹2,40,000/year (₹20,000/month).\nRates: Plant/machinery 2%, Land/building/furniture 10%.\nSection 194-IB (individual/HUF paying rent > ₹50,000/month): 5%, deduct once at year-end.\nFile Form 26QC and issue Form 16C to landlord.',
+   kw:['194i','rent tds','landlord','tenant','194-ib','26qc','rental','10 percent rent','commercial rent']},
+
+  {id:'tds-194j',cat:'tds',title:'Section 194J — TDS on Professional/Technical Fees',
+   content:'Threshold: > ₹30,000/year per payee.\nRates:\n• Technical services (not professional): 2%\n• Professional services, royalty, non-compete: 10%\n• Call centre operators: 2%\nProfessional services: CA fees, doctor fees, legal fees, consulting, architect.\nTechnical services: IT support, software development.',
+   kw:['194j','professional fees','technical fees','ca fees','consulting','royalty','software','10 percent professional','2 percent technical']},
+
+  {id:'tds-194q',cat:'tds',title:'Section 194Q — TDS on Purchase of Goods',
+   content:'Applicable from July 1, 2021.\nBuyer: turnover > ₹10 crore. Purchase > ₹50 lakh/year from same seller.\nRate: 0.1% (5% if PAN not available).\nDeduct at earlier of: payment or credit to seller\'s account.\nNot applicable if TCS already collected by seller u/s 206C(1H).',
+   kw:['194q','purchase tds','goods tds','buyer tds','206c','tcs','procurement','50 lakh purchase']},
+
+  {id:'tds-deadlines',cat:'tds',title:'TDS/TCS Payment and Return Filing Deadlines',
+   content:'Payment: 7th of next month (March: April 30).\nQuarterly returns:\n• Q1 (Apr–Jun): July 31\n• Q2 (Jul–Sep): October 31\n• Q3 (Oct–Dec): January 31\n• Q4 (Jan–Mar): May 31\nForms: 24Q (salary), 26Q (domestic non-salary), 27Q (non-resident), 27EQ (TCS).\nForm 16/16A issued within 15 days of return due date.\nLate fee: ₹200/day u/s 234E.',
+   kw:['tds due date','tds return','quarterly return','form 24q','26q','27q','form 16','234e','july 31','may 31']},
+
+  {id:'tds-197',cat:'tds',title:'Section 197 — Lower TDS Certificate',
+   content:'Apply Form 13 on TRACES portal if income is below taxable threshold.\nApproved by Jurisdictional Assessing Officer (AO).\nValidity: One financial year.\nCommon uses: Mutual fund redemptions, NRI property sales, professional income, FD interest.\nSubmit certificate to deductor — they deduct at lower rate.',
+   kw:['197','lower tds','nil tds','form 13','traces','certificate','reduced tds','tds exemption']},
+
+  {id:'ca-mgt7',cat:'companies_act',title:'MGT-7 / MGT-7A — Annual Return Filing',
+   content:'MGT-7: All companies except small companies and OPCs.\nMGT-7A: Small companies and OPCs (simplified form).\nDue: Within 60 days of AGM (AGM by Sept 30) → ~November 28/29.\nContents: Share capital, shareholders, directors, KMP, meetings, indebtedness, CSR.\nLate fee: ₹100/day. Non-filing penalty: director ₹50,000–₹5,00,000.',
+   kw:['mgt-7','annual return','roc filing','company return','agm','november','mca','mgt7']},
+
+  {id:'ca-aoc4',cat:'companies_act',title:'AOC-4 — Financial Statements Filing',
+   content:'All companies. Due: Within 30 days of AGM (AGM by Sept 30) → ~October 29/30.\nContents: Balance sheet, P&L, cash flow, auditor\'s report, board\'s report.\nXBRL mandatory: Listed companies + public companies with paid-up capital ≥ ₹5 crore or turnover ≥ ₹100 crore.\nLate fee: ₹100/day.',
+   kw:['aoc-4','financial statements','balance sheet','roc','annual accounts','xbrl','october','mca filing']},
+
+  {id:'ca-dir3kyc',cat:'companies_act',title:'DIR-3 KYC — Annual Director KYC',
+   content:'All DIN holders must complete KYC by September 30 every year.\nFirst-time DIN: DIR-3 KYC form — personal mobile + email (OTP-verified), PAN, photo.\nSubsequent years: DIR-3 KYC-Web (OTP only, no document upload).\nNon-compliance: DIN deactivated.\nReactivation: File DIR-3 KYC + ₹5,000 penalty.',
+   kw:['dir-3 kyc','director kyc','din','september 30','din deactivated','aadhaar','director identification','kyc']},
+
+  {id:'ca-board-agm',cat:'companies_act',title:'Board Meetings and AGM Requirements',
+   content:'Board Meetings:\n• Minimum 4 per year\n• Max gap: 120 days between consecutive meetings\n• Notice: 7 days in advance\n• Quorum: 1/3 of total directors OR 2 directors (whichever higher)\nAGM:\n• First: within 9 months of first FY end\n• Subsequent: by September 30 (within 6 months of FY end)\n• Max gap between AGMs: 15 months\n• 21-day notice required',
+   kw:['board meeting','agm','annual general meeting','quorum','notice','120 days','september 30','opc','directors']},
+
+  {id:'ca-llp',cat:'companies_act',title:'LLP Annual Filing — Form 11 and Form 8',
+   content:'Form 11 (Annual Return): Due May 30 (60 days from FY close).\nContents: Partners details, contribution, changes during year.\nForm 8 (Statement of Accounts): Due October 30.\nContents: Balance sheet, P&L, solvency declaration.\nLLP Tax Audit: Mandatory if turnover > ₹1 crore or partner contribution > ₹25 lakh.\nLLP IT Rate: 30% flat. Late fee: ₹100/day per form.',
+   kw:['llp','limited liability partnership','form 11','form 8','llp return','partner','may 30','october 30']},
+
+  {id:'ca-private-calendar',cat:'companies_act',title:'Private Company Annual Compliance Calendar',
+   content:'Monthly: TDS payment by 7th; GSTR-1 by 11th; GSTR-3B by 20th.\nQuarterly: TDS returns (Q1: July 31, Q2: Oct 31, Q3: Jan 31, Q4: May 31).\nSeptember 30: AGM, DIR-3 KYC, advance tax 45%.\nOctober 29–31: AOC-4 financial statements.\nNovember 28–29: MGT-7 annual return.\nDecember 31: GSTR-9 annual return, belated/revised ITR.',
+   kw:['compliance calendar','annual compliance','private company','checklist','due dates','company filings','roc compliance']},
+
+  {id:'comp-monthly',cat:'compliance',title:'Monthly Compliance Due Dates — Quick Reference',
+   content:'7th: TDS/TCS payment (April 30 for March).\n11th: GSTR-1 for monthly filers (> ₹5Cr turnover).\n15th: Advance tax installment.\n18th: CMP-08 for composition dealers.\n20th: GSTR-3B (> ₹5Cr).\n22nd/24th: GSTR-3B for QRMP (Cat 1/2 states).',
+   kw:['due date','monthly deadline','7th','11th','20th','compliance dates','tds gst deadline','payment date']},
+
+  {id:'comp-annual',cat:'compliance',title:'Annual Compliance Deadlines — Key Dates',
+   content:'June 15: Advance tax 1st installment (15%).\nJuly 31: ITR (non-audit), Q1 TDS return.\nSeptember 15: Advance tax 45%.\nSeptember 30: AGM, DIR-3 KYC, tax audit (44AB).\nOctober 31: ITR (audit cases), AOC-4, Q2 TDS return.\nNovember 28: MGT-7 annual return.\nDecember 31: GSTR-9, belated/revised ITR.\nMarch 15: Final advance tax (100%).\nMay 31: Q4 TDS return, LLP Form 11.',
+   kw:['annual deadline','compliance calendar','key dates','july 31','september 30','october 31','december 31']},
+
+  {id:'it-salary-structure',cat:'income_tax',title:'Salary Structure — Tax-Free Components',
+   content:'Fully exempt salary components:\n• HRA (u/s 10(13A)): actual/50%/40% of basic or rent-10% of basic — least is exempt\n• LTA (u/s 10(5)): twice in 4-year block; covers actual travel fare only\n• Gratuity (u/s 10(10)): ₹20 lakh exempt for non-govt employees\n• Leave encashment (u/s 10(10AA)): ₹25 lakh exempt on retirement\nPartially taxable/exempt: uniform allowance, children education (₹100/child/month, max 2), hostel (₹300/child/month).\nStandard deduction: ₹75,000 (new regime), ₹50,000 (old regime).',
+   kw:['salary','allowance','exempt','gratuity','leave encashment','lta','hra','uniform','ctc','take home','in hand']},
+
+  {id:'it-esop',cat:'income_tax',title:'ESOP / Employee Stock Options — Taxation',
+   content:'ESOPs taxed at two stages:\n1. At exercise: Difference between FMV on exercise date and exercise price → taxed as salary perquisite (TDS by employer)\n2. At sale: Difference between sale price and FMV at exercise → taxed as capital gains (STCG/LTCG based on holding)\nStartup employees (DPIIT-recognised): Tax deferred to earliest of (a) 5 years from allotment, (b) date of sale, (c) date employee leaves.',
+   kw:['esop','stock option','employee stock','equity compensation','rsu','startup equity','perquisite','sweat equity']},
+
+  {id:'it-freelancer',cat:'income_tax',title:'Freelancer / Gig Worker — Tax Filing',
+   content:'Freelancers are treated as professionals or business owners:\n• Income < ₹75L: use Section 44ADA (50% presumptive profit) — no books needed, ITR-4\n• Income > ₹75L: maintain books, get tax audit (44AB), file ITR-3\nDeductible expenses (actual basis): laptop, software, internet, coworking space, professional courses, home office proportion.\nTDS: Clients deduct 10% TDS u/s 194J on professional payments.\nAdvance tax: Pay quarterly if liability > ₹10,000.',
+   kw:['freelancer','gig','self employed','consultant','work from home','professional income','44ada','content creator','youtuber']},
+
+  {id:'it-rental-income',cat:'income_tax',title:'Rental Income — How It Is Taxed',
+   content:'Rental income taxable under "Income from House Property":\n• Standard deduction: 30% of net annual value (NAV) — no receipts needed, flat\n• Home loan interest: unlimited deduction for let-out property (loss set-off ₹2L/year)\n• Municipal taxes paid: deductible from gross rent\nNAV = Annual rent received (or expected) − municipal taxes paid\nFor vacant property: deemed let out at market rent (deemed NAV taxable)\nTDS by tenant: 10% if annual rent > ₹2.4L (Section 194I)',
+   kw:['rental income','rent received','house property','tenant','landlord','let out','rented house','property income']},
+
+  {id:'it-crypto',cat:'income_tax',title:'Crypto / VDA — Taxation',
+   content:'Since Budget 2022, Virtual Digital Assets (crypto, NFTs) have a flat tax:\n• Tax rate: 30% on gains (no deduction for losses, no set-off against other income)\n• TDS: 1% deducted by exchange at time of sale u/s 194S (threshold ₹50,000/year)\n• Loss from one VDA cannot offset gain from another VDA\n• Mining income: taxed as income from other sources at 30%\n• Gifted VDA: taxable in hands of recipient u/s 56(2)(x)\nITR: Report in Schedule VDA in ITR-2 or ITR-3.',
+   kw:['crypto','bitcoin','ethereum','nft','virtual digital asset','vda','blockchain','cryptocurrency','web3','defi']},
+
+  {id:'it-gift-tax',cat:'income_tax',title:'Gift Tax Rules — Section 56(2)',
+   content:'Gifts received are taxable as "Income from Other Sources" u/s 56(2)(x) if:\n• Cash gifts > ₹50,000 in a year from non-relatives\n• Immovable property received without consideration or for less than stamp duty value\n• Movable property received at below FMV and difference > ₹50,000\nExemptions (gifts fully tax-free):\n• Gifts from relatives (spouse, siblings, parents, grandparents, children)\n• Gifts received on marriage (from anyone)\n• Gifts by inheritance/will',
+   kw:['gift tax','56(2)','gift received','cash gift','property gift','relative','wedding gift','inheritance','will']},
+
+  {id:'it-nri',cat:'income_tax',title:'NRI Taxation — Key Rules',
+   content:'NRI: only Indian-sourced income taxed in India.\nNRI income taxable in India: salary for services rendered in India, rental income from Indian property, capital gains on Indian assets, interest from NRO accounts.\nTax rates: Same slabs as residents. TDS is generally higher for NRIs (20–30%).\nNRO vs NRE: Interest on NRO accounts taxable; NRE account interest fully exempt.\nDTAA: Double Tax Avoidance Agreements reduce double taxation.',
+   kw:['nri','non resident indian','abroad','overseas','nro','nre','dtaa','double tax','foreign income','residential status']},
+
+  {id:'it-80tta-80ttb',cat:'income_tax',title:'Section 80TTA / 80TTB — Savings Interest Deduction',
+   content:'Section 80TTA (for non-seniors):\n• Deduction up to ₹10,000 on interest from savings bank accounts only\n• Does NOT cover FD interest\nSection 80TTB (for senior citizens, 60+):\n• Deduction up to ₹50,000 on interest from savings accounts, FDs, and post office deposits\n• Replaces 80TTA for seniors\nBoth available under old regime only.',
+   kw:['80tta','80ttb','savings account','bank interest','interest deduction','senior citizen interest','fd interest deduction']},
+
+  {id:'it-notice',cat:'income_tax',title:'Income Tax Notice — Types and How to Respond',
+   content:'Common IT notices:\n• Section 139(9) — Defective return: Minor errors; respond within 15 days on portal\n• Section 143(1) — Intimation: Auto-processed; mismatch in TDS/income\n• Section 143(2) — Scrutiny notice: Department wants to verify; respond within deadline\n• Section 148 — Escaped income: Serious — file response within 30 days\n• Section 156 — Demand notice: Tax dues; pay or dispute within 30 days\nAll notices sent only to registered email + income tax portal.',
+   kw:['notice','tax notice','143(1)','143(2)','148','scrutiny','demand','defective return','respond notice','intimation']},
+
+  {id:'it-26as-ais',cat:'income_tax',title:'Form 26AS and AIS — What They Are',
+   content:'Form 26AS (Tax Credit Statement):\n• Shows all TDS deducted on your income, advance tax paid, self-assessment tax paid\n• Reconcile with your income before filing ITR\nAIS (Annual Information Statement):\n• More comprehensive — shows interest, dividends, mutual fund transactions, real estate, foreign remittances, crypto\n• Available on portal → Services → AIS\n• If AIS has errors, raise feedback on portal\nMismatch between ITR and 26AS/AIS can trigger notices.',
+   kw:['26as','ais','tds credit','annual information','tax credit statement','tds mismatch','form 26as']},
+
+  {id:'it-loss-setoff',cat:'income_tax',title:'Set-Off and Carry Forward of Losses',
+   content:'Income tax losses can be set off against gains:\n• Business loss (non-speculative): Set off against any income except salary; carry forward 8 years\n• Speculative loss (F&O, intraday): Only against speculative profit; carry forward 4 years\n• House property loss: Set off against other income up to ₹2L; excess carried forward 8 years\n• Short-term capital loss: Set off against any capital gain (STCG or LTCG)\n• Long-term capital loss: Only against LTCG\nRule: Loss can only be carried forward if ITR filed on time.',
+   kw:['loss','set off','carry forward','business loss','capital loss','house property loss','intraday','fno','speculation']},
+
+  {id:'it-retirement',cat:'income_tax',title:'Retirement Benefits — PF, Gratuity, Pension',
+   content:'EPF (Employee Provident Fund):\n• Withdrawal after 5 years: fully tax-free; before 5 years: taxable + 10% TDS\n• Interest on EPF: tax-free up to ₹2.5L annual contribution\nGratuity: ₹20 lakh tax-free for private employees (u/s 10(10))\nPension:\n• Commuted (lump sum) pension: Fully exempt for govt employees; 1/3 exempt for others who also receive gratuity\n• Regular pension: Taxable as salary\nNPS maturity: 60% lump sum tax-free; 40% annuity (pension taxable as received)',
+   kw:['epf','pf','provident fund','gratuity','pension','retirement','nps maturity','superannuation','vrs']},
+
+  {id:'gst-invoice-format',cat:'gst',title:'GST Invoice — Mandatory Fields',
+   content:'A valid GST tax invoice must contain:\n• Supplier name, address, GSTIN\n• Consecutive serial number (unique per FY)\n• Date of issue\n• Buyer name, address, GSTIN (for B2B)\n• HSN/SAC code (mandatory if turnover > ₹5Cr)\n• Description, quantity, unit of measure\n• Total taxable value\n• GST rate and amount (CGST + SGST or IGST)\n• Place of supply\n• Whether reverse charge applies',
+   kw:['invoice format','tax invoice','gst invoice','hsn','sac','cgst','sgst','igst','bill format','invoice fields']},
+
+  {id:'gst-place-of-supply',cat:'gst',title:'Place of Supply — IGST vs CGST+SGST',
+   content:'Place of supply determines whether IGST or CGST+SGST applies:\n• Same state: CGST + SGST\n• Different states: IGST\nKey rules:\n• Goods: Place of supply = where goods delivered\n• Services (general): Place of supply = location of recipient\n• Online services (OIDAR): Place of supply = location of recipient\n• Restaurant/hotel: Place where service is performed',
+   kw:['place of supply','igst','cgst','sgst','interstate','intrastate','which tax','tax jurisdiction']},
+
+  {id:'gst-exports',cat:'gst',title:'Exports Under GST — Zero-Rated Supply',
+   content:'Exports are "zero-rated supplies" — GST rate is 0% but exporter can claim ITC or refund.\nTwo options:\n1. Export under LUT (Letter of Undertaking): No GST charged; claim ITC refund online (faster)\n2. Export with IGST payment: Pay IGST, claim full refund later\nLUT: Apply online at GST portal; valid for FY.\nRefund process: File RFD-01 online; refund processed in 7–90 days.',
+   kw:['export','zero rated','lut','letter of undertaking','refund','igst refund','rfd-01','foreign exchange','sez']},
+
+  {id:'gst-refund',cat:'gst',title:'GST Refund — When and How to Claim',
+   content:'GST refunds can be claimed in these situations:\n• Excess tax paid\n• ITC accumulated (inverted duty structure)\n• Export of goods/services\n• Supplies to SEZ\nProcess: File RFD-01 on GST portal → attach documents → Officer processes within 7 days (provisional) and 60 days (final).\nTime limit: Within 2 years from relevant date.',
+   kw:['refund','gst refund','excess tax','itc refund','inverted duty','rfd-01','input greater output']},
+
+  {id:'gst-cancellation',cat:'gst',title:'GST Registration Cancellation and Suspension',
+   content:'Voluntary cancellation: Apply REG-16 if turnover falls below threshold or business closes.\n• File all pending returns before applying\n• Pay all dues and reverse ITC on closing stock\nSuspension: Auto-suspended if 2+ consecutive quarters of nil GSTR-3B.\nRevocation: Apply REG-21 within 90 days.\nFinal return: File GSTR-10 within 3 months of cancellation.',
+   kw:['gst cancellation','cancel gstin','suspension','close business','revocation','gstr-10','final return','deregistration']},
+
+  {id:'gst-real-estate',cat:'gst',title:'GST on Real Estate',
+   content:'Residential property:\n• Under-construction affordable housing (value ≤ ₹45L): 1% GST (no ITC)\n• Under-construction other residential: 5% GST (no ITC)\n• Ready-to-move (completion certificate issued): No GST\nCommercial property under-construction: 12% GST\nNote: Stamp duty and registration charges are NOT part of GST — they are state levies.',
+   kw:['real estate','property gst','housing','flat','apartment','under construction','affordable housing','stamp duty']},
+
+  {id:'tds-194ia',cat:'tds',title:'Section 194-IA — TDS on Property Purchase',
+   content:'TDS on purchase of immovable property (other than agricultural land):\n• Threshold: Purchase price ≥ ₹50 lakh\n• Rate: 1% of sale consideration\n• Deducted by: Buyer at time of payment to seller\nProcess: File Form 26QB online within 30 days → Issue Form 16B to seller within 15 days.\nNRI seller: Higher TDS rates apply (20–30%) as per Section 195.',
+   kw:['194-ia','property tds','buy property','property purchase','26qb','form 16b','real estate tds','sale of property']},
+
+  {id:'tds-194n',cat:'tds',title:'Section 194N — TDS on Cash Withdrawal',
+   content:'TDS on cash withdrawal from bank/post office/cooperative:\n• Threshold: > ₹1 crore in a FY (per bank account)\n• Rate: 2% on amount exceeding ₹1 crore\nHigher rate (if ITR not filed for last 3 years):\n• > ₹20 lakh to ₹1 crore: 2% TDS\n• > ₹1 crore: 5% TDS',
+   kw:['194n','cash withdrawal','bank withdrawal','atm','cash tds','large cash']},
+
+  {id:'tds-194s',cat:'tds',title:'Section 194S — TDS on Crypto/VDA Transfer',
+   content:'TDS on transfer of Virtual Digital Assets (VDA):\n• Threshold: ₹50,000/year (₹10,000 for specified persons)\n• Rate: 1% of consideration\n• Deducted by: Exchange (if through exchange) or buyer (P2P)\nKey points:\n• Applies even if VDA transferred as gift or in exchange for another VDA\n• Form 26QE: Filed by buyer in P2P transactions',
+   kw:['194s','crypto tds','vda tds','bitcoin tds','nft tds','p2p crypto','exchange tds','digital asset']},
+
+  {id:'tds-194o',cat:'tds',title:'Section 194O — TDS on E-Commerce',
+   content:'TDS on payments to e-commerce participants:\n• Deductor: E-commerce operator (Amazon, Flipkart, etc.)\n• Rate: 1%\n• Threshold: ₹5 lakh gross sales per year\nProcess: E-commerce platform deducts 1% TDS from each payment to seller. Seller claims credit in ITR.\nSmall sellers: If PAN not provided, TDS = 5%.',
+   kw:['194o','ecommerce tds','amazon seller','flipkart seller','meesho','online seller','marketplace','tds seller']},
+
+  {id:'tds-195',cat:'tds',title:'Section 195 — TDS on Payments to Non-Residents',
+   content:'TDS on payments to non-residents (NRIs, foreign companies):\n• Rate: Per Income Tax Act rates or DTAA rates (whichever lower)\nCommon rates without DTAA: Royalty 20%, professional fees 20%, interest 20%, dividends 20%\nPayer must deduct TDS before remitting and file Form 15CA/15CB:\n• Form 15CA: Online declaration by remitter\n• Form 15CB: CA certificate (required if remittance > ₹5 lakh)',
+   kw:['195','non resident','nri payment','foreign payment','remittance','15ca','15cb','royalty','dtaa non resident']},
+
+  {id:'tcs-206c',cat:'tds',title:'TCS — Tax Collected at Source Key Provisions',
+   content:'TCS on LRS (Liberalised Remittance Scheme) u/s 206C(1G):\n• Foreign remittance > ₹7 lakh/year: 20% TCS (5% if for education/medical with loan)\n• Overseas tour packages: 20% TCS\nTCS on vehicles u/s 206C(1F): >₹10 lakh motor vehicle: 1% TCS\nTCS on goods sale u/s 206C(1H): > ₹50L/year: 0.1% TCS\nOther TCS: Alcohol 1%, Timber 2.5%, Scrap 1%, Minerals 1%',
+   kw:['tcs','tax collected','206c','lrs','foreign remittance','overseas tour','motor vehicle tcs','scrap tcs']},
+
+  {id:'ca-csr',cat:'companies_act',title:'CSR — Section 135',
+   content:'CSR mandatory for companies meeting any one criterion:\n• Net worth ≥ ₹500 crore\n• Turnover ≥ ₹1,000 crore\n• Net profit ≥ ₹5 crore (average last 3 years)\nCSR spend requirement: 2% of average net profit of preceding 3 FYs.\nUnspent amount: Transfer to Schedule VII fund within 6 months.\nCSR Committee: Minimum 3 directors including 1 independent director.',
+   kw:['csr','corporate social responsibility','135','social spend','2 percent profit','pm relief','schedule vii']},
+
+  {id:'ca-audit',cat:'companies_act',title:'Statutory Audit — Companies Act Requirements',
+   content:'Every company must get statutory audit by a Chartered Accountant (CA).\nAuditor appointment:\n• First auditor: Within 30 days of incorporation by Board\n• Subsequent: Appointed at each AGM for 5-year term\n• Listed/large companies: Maximum 2 terms (10 years) then mandatory rotation\nAuditor independence: Cannot provide specified non-audit services.\nAudit report u/s 143: Standard format; CARO 2020 required for certain companies.',
+   kw:['statutory audit','company audit','auditor','ca audit','caro','appointment auditor','rotation']},
+
+  {id:'ca-opc',cat:'companies_act',title:'One Person Company (OPC) — Rules',
+   content:'OPC allows single person to run a company:\n• Only one shareholder and one director (can be same person)\n• Nominee mandatory (takes over if founder dies)\n• Conversion mandatory if paid-up capital > ₹50L or turnover > ₹2 crore\nCompliance:\n• No AGM required\n• Board meetings: At least 1 per each half of calendar year\n• AOC-4 and MGT-7A filing required\nAdvantage over proprietorship: Limited liability, separate legal entity.',
+   kw:['opc','one person company','single person company','sole proprietor','nominee','one director','small company']},
+
+  {id:'it-tax-planning-salaried',cat:'income_tax',title:'Tax Planning for Salaried Employees — Checklist',
+   content:'Maximise deductions under old regime:\n1. 80C (₹1.5L): PPF/ELSS/NPS top-up\n2. 80CCD(1B) (₹50K extra): NPS Tier-1 contribution\n3. 80D (₹25K): Health insurance for self; ₹50K for senior parents\n4. HRA: Pay rent even to parents (get rent receipts, PAN)\n5. 24(b) (₹2L): Home loan interest\n6. LTA: Claim twice in 4-year block\n7. Standard deduction (₹75K or ₹50K): Automatic\nKey decision: Calculate tax under both regimes in January.',
+   kw:['tax planning','salaried','salary','employee','checklist','form 12bb','regime choice','how to save']},
+
+  {id:'it-ppf',cat:'income_tax',title:'PPF (Public Provident Fund) — Complete Guide',
+   content:'PPF is EEE (Exempt-Exempt-Exempt) — contribution, interest, and maturity all tax-free.\nKey features:\n• Tenure: 15 years (extendable by 5 years)\n• Investment: Minimum ₹500, maximum ₹1,50,000/year\n• Interest: Compounded annually; currently ~7.1%\n• Partial withdrawal: Allowed from 7th year\n• Lock-in: Cannot be closed before 15 years\nTax benefit: ₹1,50,000 deduction u/s 80C.',
+   kw:['ppf','public provident fund','15 year','government saving','eee','safe investment','ppf interest','ppf withdrawal']},
+
+  {id:'it-elss',cat:'income_tax',title:'ELSS Mutual Funds — Tax Saving Investment',
+   content:'ELSS (Equity Linked Savings Scheme):\n• Section 80C benefit: Up to ₹1.5L deduction\n• Lock-in: Only 3 years (shortest among all 80C options)\n• Returns: Market-linked; historically 12–18% CAGR over long term\n• Taxation on redemption: LTCG at 12.5% on gains > ₹1.25L\n• SIP: Can invest monthly; each SIP has its own 3-year lock-in\nBest for: Taxpayers who want both tax saving + wealth creation.',
+   kw:['elss','equity linked savings','mutual fund','80c','tax saving fund','3 year lock in','sip','market linked']},
+
+  {id:'it-itr-process',cat:'income_tax',title:'How to File ITR Online — Step by Step',
+   content:'Steps to file ITR on incometax.gov.in:\n1. Login with PAN + password (or Aadhaar OTP)\n2. e-File → File Income Tax Return → select AY\n3. Choose correct ITR form (ITR-1, 2, 3, or 4)\n4. Pre-filled data appears — verify with Form 26AS and AIS\n5. Fill income details, deductions, tax calculation\n6. Pay any balance due (Challan 280)\n7. Preview → Submit → E-Verify (Aadhaar OTP)\nDeadline: July 31 (individuals).',
+   kw:['how to file itr','file return','online filing','incometax.gov.in','e-verify','itr-v','aadhaar otp','submit return']},
+
+  {id:'it-revised-return',cat:'income_tax',title:'Revised Return — When and How to File',
+   content:'Revised return u/s 139(5) can be filed if you made a mistake in the original return.\nDeadline: December 31 of the assessment year.\nHow to file: Same process as original — go to e-File → File ITR → select "Revised" → provide acknowledgment number.\nCommon reasons: Missed a deduction (forgot 80C), income not reported, wrong ITR form, bank account changed.\nRevised return can be filed multiple times before deadline.',
+   kw:['revised return','amend return','correct mistake','139(5)','december 31','re-file','update return']},
+
+  {id:'comp-penalty',cat:'compliance',title:'Key Penalties Under Income Tax and GST',
+   content:'Income Tax penalties:\n• 234A: 1%/month on unpaid tax if ITR filed late\n• 234B: 1%/month on unpaid advance tax\n• 234C: 1%/month on under-payment of advance tax installment\n• 234F: ₹5,000 (₹1,000 if income < ₹5L) for late ITR filing\n• 270A: 50% of tax on under-reporting; 200% for misreporting\nGST penalties:\n• Late GSTR-1: ₹200/day max ₹5,000\n• Late GSTR-3B: ₹50/day max ₹5,000\n• 18% interest on late GST payment',
+   kw:['penalty','fine','interest','234a','234b','270a','271b','late filing','non compliance','default']},
+
+  {id:'it-pan-aadhaar',cat:'income_tax',title:'PAN-Aadhaar Linking — Status and Consequences',
+   content:'PAN-Aadhaar linking was mandatory by June 30, 2023.\nCurrent status (if not linked):\n• PAN becomes inoperative\n• TDS deducted at higher rates (20%) instead of normal rates\n• Cannot file ITR or receive refunds\nHow to link: Income tax portal → Profile → Link Aadhaar → Pay ₹1,000 penalty → OTP verify.\nPost-linking: PAN becomes operative again within 30 days.',
+   kw:['pan aadhaar link','inoperative pan','pan link','aadhaar pan','link penalty','1000 penalty','higher tds']},
+
+  {id:'it-depreciation',cat:'income_tax',title:'Depreciation Under Income Tax — Rates and Rules',
+   content:'Depreciation rates (Written Down Value method):\n• Residential buildings: 5%\n• Plant and machinery (general): 15%\n• Computers and software: 40%\n• Motor vehicles (non-heavy): 15%\n• Furniture: 10%\n• Intangible assets (patent, trademark): 25%\nAdditional depreciation (Section 32(1)(iia)): 20% extra in year of first use for new machinery.\nHalf rate in year of purchase if used < 180 days. No depreciation on land.',
+   kw:['depreciation','wdv','written down value','40 percent','machinery depreciation','computer depreciation','car depreciation','building depreciation']},
+
+  {id:'gst-ewaybill',cat:'gst',title:'E-Way Bill — When Required',
+   content:'E-Way Bill required for movement of goods worth > ₹50,000:\n• Generated on ewaybillgst.gov.in\n• Who generates: Supplier, recipient, or transporter\nValidity:\n• ≤ 200 km: 1 day\n• Every additional 200 km: 1 extra day\nPenalty for no e-way bill: ₹10,000 or tax amount (whichever higher); goods can be seized.',
+   kw:['eway bill','e-way bill','goods transport','movement goods','50000','ewaybill','gst transport','vehicle']},
+
+  {id:'it-home-loan-joint',cat:'income_tax',title:'Joint Home Loan — Who Claims Tax Benefits',
+   content:'When home loan is taken jointly:\n• Both co-borrowers can independently claim deductions\n• Section 24(b): Each can claim up to ₹2L interest → combined ₹4L\n• Section 80C: Each can claim up to ₹1.5L principal repayment → combined ₹3L\nConditions: Both must be co-owners and repaying from their own accounts.\nBest practice: Take loan in both names if both have taxable income.',
+   kw:['joint loan','joint home loan','co-borrower','co-owner','husband wife loan','joint property','home loan deduction']},
+
+  {id:'it-tax-planning-business',cat:'income_tax',title:'Tax Planning for Business Owners',
+   content:'Key strategies for business owners:\n1. Presumptive scheme (44AD): If turnover ≤ ₹3Cr, declare 8%/6% profit — no books needed\n2. Business expenses: Legitimately deduct rent, salaries, depreciation, travel, advertisement\n3. Depreciation: Claim on all business assets; additional 20% in year of purchase\n4. NPS via 80CCD(2): Business can contribute to owner\'s NPS\n5. Family employment: Pay reasonable salary to spouse/family working in business\n6. GST: Register and claim ITC on all business purchases',
+   kw:['business tax planning','businessman','proprietor','expenses','depreciation','deduction business','44ad','profit planning']},
+
+  {id:'it-80eea',cat:'income_tax',title:'Section 80EEA — Additional Home Loan Interest for First-Time Buyers',
+   content:'Additional deduction for first-time home buyers:\n• Deduction: Up to ₹1,50,000 on home loan interest (OVER AND ABOVE ₹2L u/s 24(b))\n• Conditions: Stamp duty value ≤ ₹45 lakh; Loan sanctioned between April 1, 2019 and March 31, 2022\n• Total combined benefit: ₹3.5L (₹2L u/s 24(b) + ₹1.5L u/s 80EEA)\nNote: Budget 2022 did not extend 80EEA beyond March 2022.',
+   kw:['80eea','first home','affordable housing','home loan deduction','stamp duty 45 lakh','first time buyer']},
+
+  {id:'it-salary-perks',cat:'income_tax',title:'Taxable Perquisites — Company Car, Meals, Phone',
+   content:'Common perquisites and their taxability:\n• Company car (for personal use): ₹1,800–₹2,400/month added to salary\n• Free meals: ₹50/meal tax-free; excess taxable\n• Company accommodation: 15%/10%/7.5% of salary added (based on city population)\n• Free phone/internet: Fully exempt if used for official purpose\n• Club membership: Taxable at cost to employer\n• Interest-free loan: If > ₹20,000 from employer, taxable at SBI lending rate differential',
+   kw:['perquisite','perk','company car','meal voucher','accommodation','phone allowance','employer benefit','taxable benefit']},
+
+  {id:'gst-hsn-sac',cat:'gst',title:'HSN and SAC Codes — GST Classification',
+   content:'HSN (Harmonised System of Nomenclature): For goods.\nSAC (Service Accounting Code): For services.\nMandatory from certain turnover:\n• Turnover ≤ ₹1.5 crore: No HSN required on invoice\n• ₹1.5–₹5 crore: 4-digit HSN\n• > ₹5 crore: 8-digit HSN\nCommon SAC codes:\n• Legal services: 998212\n• Accounting services: 998222\n• IT services: 998314\n• Restaurant: 996331',
+   kw:['hsn','sac','code','classification','goods code','service code','tariff','8 digit','4 digit']},
+
+  {id:'it-section-43b',cat:'income_tax',title:'Section 43B — Deductions Allowed Only on Payment',
+   content:'Certain business expenses deductible only if actually PAID before filing ITR:\n• Employee contribution to PF/ESI/gratuity fund\n• Any tax, duty, cess, fee under any law\n• Bonus or commission to employees\n• Interest on borrowing from public financial institution/bank\n• Leave encashment\nAmendment (Finance Act 2023): MSME payments: If payment to MSME not made within 45 days (15 days if no agreement), deduction disallowed until actual payment.',
+   kw:['43b','payment basis','msme payment','provident fund','deductible','bonus','cess','interest deduction business']},
+
+  {id:'gst-tcs-ecommerce',cat:'gst',title:'GST TCS by E-Commerce Operators',
+   content:'E-commerce operators must collect TCS (Tax Collected at Source) under GST:\n• Rate: 1% (0.5% CGST + 0.5% SGST, or 1% IGST)\n• Collected from: Net value of taxable supplies by sellers through their platform\n• Deposited: 10th of next month\n• Return: GSTR-8 monthly by 10th\nSeller claims TCS credit in their own GSTR-3B.\nNote: This GST TCS is separate from Income Tax TDS u/s 194O (which is also 1%).',
+   kw:['ecommerce tcs','gstr-8','amazon','flipkart','online marketplace','tcs gst','seller gst','ecommerce operator']},
+]
+
+// ══════════════════════════════════════════
+// STOPWORDS & RAG (pure on-device)
+// ══════════════════════════════════════════
+const STOPWORDS = new Set(['the','is','in','of','and','to','for','or','a','an','on','at','with','by','from','as','it','its','be','are','was','were','has','have','had','not','do','does','can','will','would','should','could','may','might','must','that','this','these','those','what','how','when','where','which','who','why','per','if','my','me','i','he','she','they','we','you','your','our','their','his','her','under','section','please','tell','about','help','need','want','know','get','use','make','much','any','all','some','more'])
+
+function retrieve(query, topK = 3) {
+  const words = query.toLowerCase().split(/\W+/).filter(w => w.length > 2 && !STOPWORDS.has(w))
+  if (!words.length) return []
+  return KB.map(chunk => {
+    const tL = chunk.title.toLowerCase(), kL = chunk.kw.join(' '), cL = chunk.content.toLowerCase()
+    let s = 0
+    for (const w of words) {
+      if (tL.includes(w)) s += 3
+      if (kL.includes(w)) s += 2
+      if (cL.includes(w)) s += 1
+    }
+    return { chunk, score: s }
+  }).filter(x => x.score > 0).sort((a, b) => b.score - a.score).slice(0, topK).map(x => x.chunk)
+}
+
+// ══════════════════════════════════════════
+// RESPONSE GENERATOR
+// ══════════════════════════════════════════
+function generateResponse(query, chunks, profile) {
+  if (!chunks.length) {
+    return "I can help with Indian Income Tax, GST, TDS/TCS, and Companies Act compliance.\n\nCould you rephrase your question with more specific terms? For example: \"Section 80C deductions\", \"GSTR-3B filing\", \"TDS on salary\".\n\n*Always consult a qualified CA for advice specific to your situation.*"
+  }
+  const q = query.toLowerCase()
+  const primary = chunks[0]
+  let intro = ''
+  if (/how|save|reduce|minimize|claim|plan/.test(q))  intro = `Here's how to approach **${primary.title}**:\n\n`
+  else if (/what|which|qualify|eligible|include|mean/.test(q)) intro = `**${primary.title}** — explained:\n\n`
+  else if (/when|due|date|deadline|last/.test(q)) intro = `**Key dates** for ${primary.title}:\n\n`
+  else if (/vs|versus|better|compare|difference/.test(q)) intro = `**Comparing — ${primary.title}:**\n\n`
+  else intro = `**${primary.title}**\n\n`
+
+  let response = intro + primary.content
+
+  if (chunks.length > 1) {
+    const sec = chunks[1]
+    const lines = sec.content.split('\n').slice(0, 6).join('\n')
+    response += `\n\n---\n\n**Also relevant — ${sec.title}:**\n${lines}`
+  }
+
+  if (profile) {
+    const isDeductionQ = /deduction|80c|80d|hra|lta|save tax/.test(q)
+    if (isDeductionQ && profile.regime === 'new')
+      response += `\n\n> ⚠️ **Note for you (New Regime):** Most Chapter VI-A deductions (80C, 80D, HRA, LTA) are NOT available. Consider switching to old regime if your deductions are substantial.`
+    if (isDeductionQ && profile.regime === 'old')
+      response += `\n\n> ✅ **Good news (Old Regime):** You can claim this deduction to reduce your taxable income.`
+    if (profile.incomeRange && primary.cat === 'income_tax')
+      response += `\n\n> 📊 Based on your income (${profile.incomeRange}): use an online tax calculator to compare both regimes with your actual numbers.`
+  }
+
+  response += '\n\n*⚖️ General information only — consult a qualified Chartered Accountant for advice specific to your situation.*'
+  return response
+}
+
+// ══════════════════════════════════════════
+// MARKDOWN RENDERER
+// ══════════════════════════════════════════
+function renderMd(t) {
+  if (!t) return ''
+  return t
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/^#{1,4}\s(.+)$/gm, '<h4>$1</h4>')
+    .replace(/^[-•]\s(.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    .replace(/^>\s(.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/---/g, '<hr>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>')
+}
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let isStreaming = false
+let abortFlag = false
+let selectedRegime = 'unsure'
+let msgCount = 0
+let chatStarted = false
+
+const QUICK_QUESTIONS = [
+  '💰 How do I save tax in FY 2024-25?',
+  '⚖️ New regime vs old regime?',
+  '📋 Section 80C investments list',
+  '🏠 Home loan tax benefits?',
+  '📅 When to file advance tax?',
+  '🧾 GST registration threshold',
+]
+
+// ══════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════
+function loadProfile() {
+  try { return JSON.parse(localStorage.getItem('ca_profile') || 'null') } catch { return null }
+}
+function saveProfileData(p) { localStorage.setItem('ca_profile', JSON.stringify(p)) }
+
+// ══════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════
+const sleep = ms => new Promise(r => setTimeout(r, ms))
+
+function scrollBottom() {
+  const s = document.getElementById('chat-scroll')
+  if (s) requestAnimationFrame(() => { s.scrollTop = s.scrollHeight })
+}
+
+function autoResize(el) {
+  el.style.height = '24px'
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px'
+}
+
+function showChatArea() {
+  if (!chatStarted) {
+    chatStarted = true
+    document.getElementById('welcome-screen').style.display = 'none'
+  }
+}
+
+function addMessage(role, content) {
+  const id = ++msgCount
+  showChatArea()
+  const row = document.createElement('div')
+  row.id = 'msg-' + id
+  row.className = 'msg-row ' + (role === 'user' ? 'user' : '')
+
+  const avatarClass = role === 'user' ? 'avatar-user' : 'avatar-ai'
+  const avatarText = role === 'user' ? 'U' : 'CA'
+  const bubbleClass = role === 'user' ? 'bubble-user' : 'bubble-ai'
+
+  row.innerHTML = `
+    <div class="msg-avatar ${avatarClass}">${avatarText}</div>
+    <div class="msg-bubble ${bubbleClass}" id="bubble-${id}">
+      ${role === 'user'
+        ? `<div>${escHtml(content)}</div>`
+        : `<div class="prose" id="prose-${id}"></div>`
+      }
+    </div>`
+  document.getElementById('messages').appendChild(row)
+  scrollBottom()
+  return id
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+}
+
+function addTypingIndicator() {
+  const id = ++msgCount
+  showChatArea()
+  const row = document.createElement('div')
+  row.id = 'msg-' + id
+  row.className = 'msg-row'
+  row.innerHTML = `
+    <div class="msg-avatar avatar-ai">CA</div>
+    <div class="msg-bubble bubble-ai">
+      <div class="typing-dots"><span></span><span></span><span></span></div>
+    </div>`
+  document.getElementById('messages').appendChild(row)
+  scrollBottom()
+  return id
+}
+
+function removeTyping(id) {
+  const el = document.getElementById('msg-' + id)
+  if (el) el.remove()
+  msgCount--
+}
+
+function updateStream(id, text, done) {
+  const prose = document.getElementById('prose-' + id)
+  if (!prose) return
+  prose.innerHTML = renderMd(text) + (done ? '' : '<span style="display:inline-block;width:2px;height:14px;background:var(--saffron);margin-left:2px;animation:blink .7s infinite;vertical-align:middle"></span>')
+  scrollBottom()
+}
+
+function finishMessage(id, text, sources) {
+  const prose = document.getElementById('prose-' + id)
+  if (!prose) return
+  prose.innerHTML = renderMd(text)
+
+  if (sources && sources.length) {
+    const srcId = 'src-' + id
+    const wrap = document.createElement('div')
+    wrap.className = 'sources-wrap'
+    wrap.innerHTML = `
+      <div class="sources-toggle" onclick="toggleSources('${srcId}')">
+        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253"/></svg>
+        ${sources.length} reference${sources.length > 1 ? 's' : ''} used
+        <svg class="sources-chevron" width="10" height="10" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="chev-${srcId}"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+      </div>
+      <div class="sources-chips" id="${srcId}">
+        ${sources.map(s => `<span class="source-chip">${s}</span>`).join('')}
+      </div>`
+    document.getElementById('bubble-' + id).appendChild(wrap)
+  }
+
+  // copy button
+  const acts = document.createElement('div')
+  acts.className = 'msg-actions'
+  acts.innerHTML = `<button class="action-btn" onclick="copyMsg(this, '${id}')">
+    <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    Copy</button>`
+  document.getElementById('msg-' + id).appendChild(acts)
+}
+
+function toggleSources(id) {
+  const el = document.getElementById(id)
+  const chev = document.getElementById('chev-' + id)
+  el.classList.toggle('open')
+  if (chev) chev.style.transform = el.classList.contains('open') ? 'rotate(180deg)' : ''
+}
+
+function copyMsg(btn, id) {
+  const prose = document.getElementById('prose-' + id)
+  if (!prose) return
+  navigator.clipboard.writeText(prose.innerText).then(() => {
+    btn.textContent = '✓ Copied'
+    setTimeout(() => { btn.innerHTML = '<svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy' }, 1500)
+  }).catch(() => {})
+}
+
+// ══════════════════════════════════════════
+// SEND MESSAGE
+// ══════════════════════════════════════════
+async function sendMessage(text) {
+  if (!text.trim() || isStreaming) return
+  isStreaming = true
+  abortFlag = false
+
+  document.getElementById('input').value = ''
+  document.getElementById('input').style.height = '24px'
+  document.getElementById('send-btn').style.display = 'none'
+  document.getElementById('stop-btn').style.display = 'flex'
+
+  addMessage('user', text)
+
+  // short delay then show typing indicator
+  await sleep(200)
+  const typingId = addTypingIndicator()
+  await sleep(400 + Math.random() * 300)
+  removeTyping(typingId)
+
+  const chunks = retrieve(text)
+  const profile = loadProfile()
+  const fullResponse = generateResponse(text, chunks, profile)
+
+  const id = addMessage('assistant', '')
+  const words = fullResponse.split(' ')
+  let revealed = ''
+
+  for (const word of words) {
+    if (abortFlag) break
+    revealed += (revealed ? ' ' : '') + word
+    updateStream(id, revealed, false)
+    await sleep(10 + Math.random() * 16)
+  }
+
+  finishMessage(id, revealed, chunks.map(c => c.title))
+
+  isStreaming = false
+  abortFlag = false
+  document.getElementById('send-btn').style.display = 'flex'
+  document.getElementById('stop-btn').style.display = 'none'
+  document.getElementById('input').focus()
+}
+
+function stopStream() { abortFlag = true }
+function handleSend() { sendMessage(document.getElementById('input').value) }
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
+}
+
+// ══════════════════════════════════════════
+// CATEGORY QUICK SEND
+// ══════════════════════════════════════════
+function askCategory(text) { sendMessage(text) }
+
+// ══════════════════════════════════════════
+// CLEAR CHAT
+// ══════════════════════════════════════════
+function clearChat() {
+  if (isStreaming) stopStream()
+  msgCount = 0
+  chatStarted = false
+  document.getElementById('messages').innerHTML = ''
+  document.getElementById('welcome-screen').style.display = ''
+  renderQuickButtons()
+}
+
+// ══════════════════════════════════════════
+// PROFILE MODAL
+// ══════════════════════════════════════════
+function setRegime(r) {
+  selectedRegime = r
+  ;['new','old','unsure'].forEach(k => {
+    const el = document.getElementById('rc-' + k)
+    if (!el) return
+    el.classList.toggle('selected', k === r)
+  })
+}
+
+function openProfile() {
+  const modal = document.getElementById('profile-modal')
+  modal.classList.add('open')
+  const p = loadProfile()
+  if (p) {
+    document.getElementById('p-income').value = p.incomeRange || ''
+    document.getElementById('p-type').value = p.userType || ''
+    setRegime(p.regime || 'unsure')
+  } else {
+    setRegime('unsure')
+  }
+}
+
+function closeProfile() {
+  document.getElementById('profile-modal').classList.remove('open')
+}
+
+function handleModalClick(e) {
+  if (e.target.classList.contains('modal-backdrop')) closeProfile()
+}
+
+function saveProfileAndClose() {
+  const p = {
+    incomeRange: document.getElementById('p-income').value,
+    regime: selectedRegime,
+    userType: document.getElementById('p-type').value,
+  }
+  saveProfileData(p)
+  closeProfile()
+  const btn = document.getElementById('profile-btn')
+  btn.classList.add('active')
+  btn.title = `Profile: ${p.incomeRange || p.userType || 'Saved'}`
+}
+
+// ══════════════════════════════════════════
+// QUICK QUESTIONS
+// ══════════════════════════════════════════
+function renderQuickButtons() {
+  const el = document.getElementById('quick-btns')
+  if (!el) return
+  el.innerHTML = QUICK_QUESTIONS.map((q, i) => {
+    const clean = q.replace(/^[\p{Emoji}\s]+/u, '').trim()
+    return `<button class="quick-btn ripple-wrap" style="opacity:0;animation:heroIn .45s cubic-bezier(.34,1.56,.64,1) ${i * 38}ms forwards" onclick="sendMessage('${clean.replace(/'/g,"\\'")}')">` + q + '</button>'
+  }).join('')
+}
+
+// ══════════════════════════════════════════
+// PWA MANIFEST
+// ══════════════════════════════════════════
+function setupPWA() {
+  const iconSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#FF9933"/><text x="96" y="140" font-size="120" text-anchor="middle" fill="white" font-family="Arial">₹</text></svg>`
+  const iconURL = 'data:image/svg+xml;base64,' + btoa(iconSVG)
+  const manifest = {
+    name: 'CA.ai — Indian Tax Advisor',
+    short_name: 'CA.ai',
+    description: 'AI-powered Indian Chartered Accountant — runs fully on your device',
+    start_url: './',
+    display: 'standalone',
+    orientation: 'portrait',
+    theme_color: '#FF9933',
+    background_color: '#f8fafc',
+    icons: [
+      { src: iconURL, sizes: '192x192', type: 'image/svg+xml' },
+      { src: iconURL, sizes: '512x512', type: 'image/svg+xml' },
+    ],
+  }
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' })
+  document.getElementById('pwa-manifest').href = URL.createObjectURL(blob)
+}
+
+// blink keyframe for streaming cursor
+const style = document.createElement('style')
+style.textContent = '@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }'
+document.head.appendChild(style)
+
+// ══════════════════════════════════════════
+// RIPPLE EFFECT
+// ══════════════════════════════════════════
+function addRipple(el, e) {
+  const rect = el.getBoundingClientRect()
+  const touch = e.touches && e.touches[0]
+  const cx = touch ? touch.clientX : (e.clientX ?? rect.left + rect.width / 2)
+  const cy = touch ? touch.clientY : (e.clientY ?? rect.top + rect.height / 2)
+  const x = cx - rect.left
+  const y = cy - rect.top
+  const size = Math.max(rect.width, rect.height) * 1.8
+  const r = document.createElement('span')
+  r.className = 'ripple'
+  r.style.cssText = `width:${size}px;height:${size}px;left:${x - size/2}px;top:${y - size/2}px`
+  el.appendChild(r)
+  r.addEventListener('animationend', () => r.remove(), { once: true })
+}
+document.addEventListener('pointerdown', e => {
+  const wrap = e.target.closest('.ripple-wrap')
+  if (wrap) addRipple(wrap, e)
+})
+
+// ══════════════════════════════════════════
+// 3D CARD TILT
+// ══════════════════════════════════════════
+document.addEventListener('mousemove', e => {
+  document.querySelectorAll('.cat-card').forEach(card => {
+    const r = card.getBoundingClientRect()
+    const x = e.clientX - r.left, y = e.clientY - r.top
+    if (x >= 0 && x <= r.width && y >= 0 && y <= r.height) {
+      const rx = ((y / r.height) - .5) * -10
+      const ry = ((x / r.width)  - .5) *  10
+      card.style.transform = `perspective(500px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.03)`
+      card.style.transition = 'transform .08s ease'
+    }
+  })
+})
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.cat-card').forEach(c => {
+    c.addEventListener('mouseleave', () => {
+      c.style.transform = ''
+      c.style.transition = 'transform .35s cubic-bezier(.34,1.56,.64,1)'
+    })
+  })
+})
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+function init() {
+  setupPWA()
+  renderQuickButtons()
+  const p = loadProfile()
+  if (p && (p.incomeRange || p.userType)) {
+    document.getElementById('profile-btn').classList.add('active')
+    document.getElementById('profile-btn').title = `Profile: ${p.incomeRange || p.userType}`
+  }
+}
+
+init()
+</script>
+</body>
+</html>
