@@ -1,3 +1,6 @@
+This repo is a demo version intended for showcasing UI.
+The backend,infra,logic,etc are not included.
+
 # AI Indian CA App
 
 An AI-powered Indian Chartered Accountant application with features for ITR filing, GST compliance, TDS calculation, accounting, and AI-driven advisory chat.
